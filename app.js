@@ -7,7 +7,6 @@ var logger = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const passport = require('passport');
-const mongoose = require('mongoose');
 const Admin = require('./models/admin');
 const config = require('./config/database');
 
@@ -24,21 +23,27 @@ var reservationRouter = require('./routes/reservation')
 var reviewRouter = require('./routes/review')
 
 
+var app = express();
 
 var PORT = process.env.PORT || 8080;
 
 //Connection to database
-mongoose.connect(config.database);
-  mongoose.connection.on('connected', () =>{
-      console.log('Connected to database' +config.database)
-  })
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
-  mongoose.connection.on('error', () =>{
-    console.log('Database error' +err);
-})
+// Set up mongoose connection
+const mongoose = require('mongoose');
 
+let dev_db_url = "mongodb+srv://" + config.db_user + ":" + config.db_psswd + "@" + config.database;
+let mongoDB = process.env.MONGODB_URI || dev_db_url;
+mongoose.connect(mongoDB);
+mongoose.Promise = global.Promise;
+let db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-var app = express();
 app.use(cors());
 app.use(express.static(__dirname + '../public'));
 
