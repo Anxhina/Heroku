@@ -7,10 +7,9 @@ var logger = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const passport = require('passport');
+const mongoose = require('mongoose');
 const Admin = require('./models/admin');
 const config = require('./config/database');
-
-
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var pastaRouter = require('./routes/pasta')
@@ -22,10 +21,10 @@ var ditoreRouter = require('./routes/ditore')
 var reservationRouter = require('./routes/reservation')
 var reviewRouter = require('./routes/review')
 
-
 var app = express();
 
-var PORT = process.env.PORT || 8080;
+
+const PORT = process.env.PORT || 5000;
 
 //Connection to database
 app.use(function(req, res, next) {
@@ -35,7 +34,6 @@ app.use(function(req, res, next) {
 });
 
 // Set up mongoose connection
-const mongoose = require('mongoose');
 
 let dev_db_url = "mongodb+srv://" + config.db_user + ":" + config.db_psswd + "@" + config.database;
 let mongoDB = process.env.MONGODB_URI || dev_db_url;
