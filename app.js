@@ -20,6 +20,7 @@ var drinkRouter = require('./routes/drink')
 var ditoreRouter = require('./routes/ditore')
 var reservationRouter = require('./routes/reservation')
 var reviewRouter = require('./routes/review')
+const server = require('http').Server(app);
 
 var app = express();
 
@@ -43,7 +44,7 @@ let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 app.use(cors());
-app.use(express.static(__dirname + '../dist'));
+app.use(express.static(__dirname + '../public'));
 
 app.use(bodyParser.json());
 
@@ -93,7 +94,7 @@ app.use(function(err, req, res, next) {
 
 
 });
-app.listen(PORT);
+server.listen(PORT);
 
 
 module.exports = app;
