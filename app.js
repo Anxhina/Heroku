@@ -22,7 +22,6 @@ var reservationRouter = require('./routes/reservation')
 var reviewRouter = require('./routes/review')
 
 var app = express();
-const server = require('http').Server(app);
 
 
 const PORT = process.env.PORT || 5000;
@@ -61,13 +60,16 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // app.use(logger('dev'));
 // app.use(express.json());
-app.use(express.static('./dist/Client'));
+app.use(cors());
+app.use(express.static(__dirname + '../public'));
 
-app.get('/*', function(req,res) {
-    
-res.sendFile(path.join(__dirname,'/dist/Client/index.html'));
-});
+app.use(bodyParser.json());
 
+app.use(passport.initialize());
+app.use(passport.session());
+require('./config/passport')(passport);
+
+app.use(bodyParser.urlencoded({ extended: false }));
 
 //routers
 app.use('/', indexRouter);
@@ -100,7 +102,7 @@ app.use(function(err, req, res, next) {
 
 
 });
-server.listen(PORT);
+app.listen(PORT);
 
 
 module.exports = app;
