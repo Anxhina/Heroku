@@ -57,7 +57,6 @@ app.use(cors());
 // Set Static Folder
 
 // Body Parser Middleware
-app.use(bodyParser.json());
 
 // Passport Middleware
 app.use(passport.initialize());
@@ -68,8 +67,15 @@ app.set('dist', __dirname + '/dist');
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
-app.get('/', function(request, response) {
-  response.render('./Client/dist/index.html');
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(bodyParser.json());
+
+
+
+app.get('*', function(req, res){
+    res.render('index.html');
 });
 
 app.use(logger('dev'));
@@ -97,9 +103,6 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.get('/', (req, res) => {
-  res.send('invaild endpoint');
-});
 
 
 app.listen(PORT);
