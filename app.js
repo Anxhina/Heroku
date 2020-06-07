@@ -22,11 +22,13 @@ var reservationRouter = require('./routes/reservation')
 var reviewRouter = require('./routes/review')
 
 var app = express();
-const server = require('http').Server(app);
 
 
 const PORT = process.env.PORT || 5000;
+app.use(express.static(path.join(__dirname, '/Client/dist/')));
+app.use(bodyParser.json());
 
+app.use(cors());
 //Connection to database
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
@@ -63,10 +65,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // app.use(logger('dev'));
 // app.use(express.json());
-app.use(express.static(path.join(__dirname, '/Client/dist/')));
-app.use(bodyParser.json());
 
-app.use(cors());
 
 app.get('/*', function(req,res) {
     
@@ -110,7 +109,7 @@ app.use(function(err, req, res, next) {
 
 
 });
-server.listen(PORT);
+app.listen(PORT);
 
 
 module.exports = app;
