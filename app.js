@@ -20,9 +20,9 @@ var drinkRouter = require('./routes/drink')
 var ditoreRouter = require('./routes/ditore')
 var reservationRouter = require('./routes/reservation')
 var reviewRouter = require('./routes/review')
-const server = require('http').Server(app);
 
 var app = express();
+const server = require('http').Server(app);
 
 
 const PORT = process.env.PORT || 5000;
