@@ -64,13 +64,13 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(express.static(__dirname + '/Client/dist'));
-app.set('views', __dirname + '/Client/dist');
+app.use(express.static(__dirname + './Client/dist'));
+app.set('views', __dirname + './Client/dist');
 app.engine('html', ejs.renderFile);
 app.set('view engine', 'html');
 
 app.get('/', function(request, response) {
-  response.render('Client/dist/index.html');
+  response.render('./Client/dist/index.html');
 });
 
 app.use(logger('dev'));
