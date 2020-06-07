@@ -43,6 +43,8 @@ mongoose.Promise = global.Promise;
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
+  
+
 // app.use(cors());
 // app.use(express.static(__dirname + '../public'));
 
@@ -61,7 +63,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // app.use(logger('dev'));
 // app.use(express.json());
-app.use(express.static('/Client/dist/'));
+app.use(express.static(path.join(__dirname, '/Client/dist/')));
 app.use(bodyParser.json());
 
 app.use(cors());
