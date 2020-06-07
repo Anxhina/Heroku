@@ -31,13 +31,13 @@ router.post('/authenticate', (req, res, next) => {
   const password = req.body.password;
 
   Admin.getAdminByUsername(username, (err, admin) => {
-    if(err) throw err;
+    // if(err) throw err;
     if(!admin){
       return res.json({success: false, msg: 'User not found'});
     }
 
     Admin.comparePassword(password, admin.password, (err, isMatch) => {
-      if(err) throw err;
+      // if(err) throw err;
       if(isMatch){
         const token = jwt.sign(admin.toJSON(), config.secret, {
           expiresIn: 604800 // 1 week
