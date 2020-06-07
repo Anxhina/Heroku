@@ -54,7 +54,7 @@ const PORT = process.env.PORT || 8080;
 app.use(cors());
 
 // Set Static Folder
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'Client/dist')));
 
 // Body Parser Middleware
 app.use(bodyParser.json());
@@ -91,7 +91,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/index.html'));
+  res.sendFile(path.join(__dirname, 'Client/dist/index.html'));
 });
 app.listen(PORT);
 
