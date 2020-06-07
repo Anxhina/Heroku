@@ -2,6 +2,8 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+var ejs = require('ejs');
+
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const bodyParser = require('body-parser');
@@ -62,8 +64,14 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.set('Client/dist', path.join(__dirname, 'Client/dist'));
+app.use(express.static(__dirname + '/Client/dist'));
+app.set('views', __dirname + '/Client/dist');
+app.engine('html', ejs.renderFile);
 app.set('view engine', 'html');
+
+app.get('/', function(request, response) {
+  response.render('Client/dist/index.html');
+});
 
 app.use(logger('dev'));
 app.use(express.json());
