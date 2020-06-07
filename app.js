@@ -62,11 +62,11 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 // app.use(logger('dev'));
 // app.use(express.json());
 app.use(cors());
-app.use(express.static('./dist/Client'));
+app.use(express.static('./Client/dist'));
 
 app.get('/*', function(req,res) {
     
-res.sendFile(path.join(__dirname,'/dist/Client/index.html'));
+res.sendFile(path.join(__dirname,'/Client/dist/index.html'));
 });
 app.use(bodyParser.json());
 
