@@ -54,7 +54,6 @@ const PORT = process.env.PORT || 8080;
 app.use(cors());
 
 // Set Static Folder
-app.use(express.static(path.join(__dirname, 'Client/dist')));
 
 // Body Parser Middleware
 app.use(bodyParser.json());
@@ -63,7 +62,7 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.set('views', path.join(__dirname, 'Client/dist'));
+app.set('Client/dist', path.join(__dirname, 'Client/dist'));
 app.set('view engine', 'html');
 
 app.use(logger('dev'));
@@ -95,9 +94,7 @@ app.get('/', (req, res) => {
   res.send('invaild endpoint');
 });
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'Client/dist/index.html'));
-});
+
 app.listen(PORT);
 
 
