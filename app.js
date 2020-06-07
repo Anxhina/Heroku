@@ -43,6 +43,7 @@ let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 app.use(cors());
+app.use(express.static(__dirname + '../dist'));
 
 app.use(bodyParser.json());
 
@@ -54,13 +55,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 // view engine setup
-app.get('', function(req, res) {
-  res.sendFile(path.join(__dirname, 'Client/src', 'index.html'));
-});
-
-app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname, 'Client/src', 'index.html'));
-});
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
