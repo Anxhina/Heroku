@@ -63,8 +63,8 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'Client/dist'));
+app.set('view engine', 'html');
 
 app.use(logger('dev'));
 app.use(express.json());
