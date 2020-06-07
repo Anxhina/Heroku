@@ -20,15 +20,13 @@ var drinkRouter = require('./routes/drink')
 var ditoreRouter = require('./routes/ditore')
 var reservationRouter = require('./routes/reservation')
 var reviewRouter = require('./routes/review')
+const app = express();
 
-var app = express();
 
+// app.use(express.static(path.join(__dirname, '/Client/dist/')));
+// app.use(bodyParser.json());
 
-const PORT = process.env.PORT || 5000;
-app.use(express.static(path.join(__dirname, '/Client/dist/')));
-app.use(bodyParser.json());
-
-app.use(cors());
+// app.use(cors());
 //Connection to database
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
@@ -47,38 +45,28 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
   
 
-// app.use(cors());
-// app.use(express.static(__dirname + '../public'));
-
-// app.use(bodyParser.json());
-
-// app.use(passport.initialize());
-// app.use(passport.session());
-// require('./config/passport')(passport);
-
-// app.use(bodyParser.urlencoded({ extended: false }));
 
 
-// // view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'pug');
+// Port Number
+const PORT = process.env.PORT || 8080;
 
-// app.use(logger('dev'));
-// app.use(express.json());
+// CORS Middleware
+app.use(cors());
 
+// Set Static Folder
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', function(req,res) {
-    
-res.sendFile(path.join(__dirname,'/Client/dist/index.html'));
-});
+// Body Parser Middleware
+app.use(bodyParser.json());
 
+// Passport Middleware
 app.use(passport.initialize());
 app.use(passport.session());
-require('./config/passport')(passport);
 
-app.use(bodyParser.urlencoded({ extended: false }));
 
 //routers
+require('./config/passport')(passport);
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/pasta', pastaRouter);
@@ -98,16 +86,12 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+app.get('/', (req, res) => {
+  res.send('invaild endpoint');
+});
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-
-
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 app.listen(PORT);
 
