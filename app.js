@@ -43,24 +43,30 @@ mongoose.Promise = global.Promise;
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-app.use(cors());
-app.use(express.static(__dirname + '../public'));
+// app.use(cors());
+// app.use(express.static(__dirname + '../public'));
 
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 
-app.use(passport.initialize());
-app.use(passport.session());
-require('./config/passport')(passport);
+// app.use(passport.initialize());
+// app.use(passport.session());
+// require('./config/passport')(passport);
 
-app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.urlencoded({ extended: false }));
 
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+// // view engine setup
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'pug');
 
-app.use(logger('dev'));
-app.use(express.json());
+// app.use(logger('dev'));
+// app.use(express.json());
+app.use(express.static('./dist/Client'));
+
+app.get('/*', function(req,res) {
+    
+res.sendFile(path.join(__dirname,'/dist/Client/index.html'));
+});
 
 
 //routers
