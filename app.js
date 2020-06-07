@@ -63,7 +63,7 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(express.static(__dirname + './Client'));
+app.use(express.static(__dirname + '/Client'));
 app.set('dist', __dirname + '/dist');
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
