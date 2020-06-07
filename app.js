@@ -2,7 +2,6 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
-var ejs = require('ejs');
 
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -66,7 +65,7 @@ app.use(passport.session());
 
 app.use(express.static(__dirname + './Client/dist'));
 app.set('views', __dirname + './Client/dist');
-app.engine('html', ejs.renderFile);
+app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
 app.get('/', function(request, response) {
