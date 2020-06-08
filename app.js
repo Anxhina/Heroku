@@ -48,7 +48,6 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 
 
-// Port Number
 const PORT = process.env.PORT || 8080;
 
 // CORS Middleware
