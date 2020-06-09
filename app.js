@@ -61,10 +61,6 @@ app.use(cors());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(express.static(__dirname + '/Client'));
-app.set('dist', __dirname + '/dist');
-app.engine('html', require('ejs').renderFile);
-app.set('view engine', 'html');
 
 app.use(bodyParser.urlencoded({
   extended: true
@@ -73,9 +69,6 @@ app.use(bodyParser.json());
 
 
 
-app.get('*', function(req, res){
-    res.render('index.html');
-});
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -95,6 +88,13 @@ app.use('/reservation', reservationRouter);
 
 app.use('/review', reviewRouter);
 
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static( 'build' ));
+
+  app.get('*', (req, res) => {
+      res.sendFile(path.join(__dirname, 'build', 'index.html')); // relative path
+  });
+}
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
